@@ -9,52 +9,90 @@ const searchButton = document.querySelector('.search__button');
 // Se muestra en el resultado el título y la imagen
 // Si la serie no tiene imagen se mostrará 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
 // El usuario puede indicar series favoritas
+// --> El usuario pulsa sobre el li
+// --> El elemento se marca como favorito (cambia estilos)
+// --> El elemento se almacena en una lista lateral izquiera
+// --> La lista permanece siempre en la izquierda
 // Al hacer click para hacer fav el color de fondo y la fuente cambian
 // Si se hace una nueva búsqueda los resultados de fav se acumulan a la izquierda
-// El linastado de favoritos se almacena en LocalStorage
+// El listado de favoritos se almacena en LocalStorage
 
-function printTest() {
-  let urlAPI = `http://api.tvmaze.com/singlesearch/shows?q=${inputSearch.value}`;
+function printShows() {
+  let urlAPI = `http://api.tvmaze.com/search/shows?q=${inputSearch.value}`;
   fetch(urlAPI) 
-    .then(function(response) { console.log(response);
+    .then(function(response) { 
       return response.json();
     })
     .then(function(data) {
-      console.log(data);
-
+      console.log(data)
       let tvShowsContainer = document.querySelector('.tv__shows-container');
       tvShowsContainer.innerHTML = '';
-      
-      const newLi = document.createElement('li');
-      newLi.classList.add('show__item');
-      tvShowsContainer.appendChild(newLi);
 
-      const newH2 = document.createElement('h2');
-      newH2.classList.add('show__title');
-      newLi.appendChild(newH2);
-      const newTitle = document.createTextNode(data.name);
-      newH2.appendChild(newTitle);
+      for(let i = 0; i < data.length; i++) {
+        
+        const newLi = document.createElement('li');
+        newLi.classList.add('show__item');
+        tvShowsContainer.appendChild(newLi);
 
-      const newImg = document.createElement('img');
-      newImg.classList.add('show__image');
-      newLi.appendChild(newImg);
-      if(data.image === null) {
-        newImg.src = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
-      } else {
-        newImg.src = data.image.medium;
-        newImg.alt = data.title;
-      }
+        const newH2 = document.createElement('h2');
+        newH2.classList.add('show__title');
+        newLi.appendChild(newH2);
+        const newTitle = document.createTextNode(data[i].show.name);
+        newH2.appendChild(newTitle);
+
+        const newImg = document.createElement('img');
+        newImg.classList.add('show__image');
+        newLi.appendChild(newImg);
+        if(data[i].show.image === null) {
+          newImg.src = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
+        } else {
+          newImg.src = data[i].show.image.medium;
+          newImg.alt = data[i].show.title;
+        }
+      newLi.addEventListener('click', favoriteSelect);
+      };
     });
+  };
+
+searchButton.addEventListener('click', printShows);
+
+function favoriteSelect(event) {
+  console.log(event)
+  let favList = document.querySelector('.fav__list');
+  let favItem = event.path[1].cloneNode(true);
+  favList.appendChild(favItem);
+  favItem.addEventListener('click', unFavorite)
 };
-searchButton.addEventListener('click', printTest);
+
+function unFavorite(event) {
+  let favList = document.querySelector('.fav__list');
+  favList.removeChild(event.path[1])
+  console.log(event)
+}
 
 
-// LLAMADA AL SERVIDOR
-// const promise = fetch(urlAPI)
-//   .then(function(response) {
-//     return response.json();
-//   })
-//   .then(function(data) {
-//     console.log(data);
-//   });
-// console.log(promise);
+
+
+// let favList = document.querySelector('.fav__list');
+
+// newLi.addEventListener('click', function(e) {
+
+//   let favData = {
+//     name = data.name;
+//     image = data.image;
+//   };
+
+//   let favorites = localStorage('favorites') || '[]';
+//   favorites = json.parse(favorites);
+
+//   let favList = favorites.findIndex(function(e) {
+//     return e.name == favData.name; 
+//     });
+//     if(favList > -1) {
+//       favList.innerHTML = favData;
+//     }else {
+//       favorites.push(favData);
+//     }
+
+//   localStorage.setItem('favorites', JSON.stringify(favorites));
+// });
