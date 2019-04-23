@@ -1,10 +1,12 @@
 @import 'core/settings';
 
+.list-container {
+	display: flex;
+	flex-direction: row;
+}
+
 .select__favorite {
 	background-color: purple;
 	text-transform: uppercase;
 }
 
-h1 {
-	color: green;
-}

@@ -3,20 +3,6 @@
 const inputSearch = document.querySelector('.input__search');
 const searchButton = document.querySelector('.search__button');
 
-// El usuario mete el nombre de la serie en el input
-// Se recoje el texto que ha introducido el usuario en el input
-// Al hacer click en buscar la aplicación se conecta a la API
-// Se muestra en el resultado el título y la imagen
-// Si la serie no tiene imagen se mostrará 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
-// El usuario puede indicar series favoritas
-// --> El usuario pulsa sobre el li
-// --> El elemento se marca como favorito (cambia estilos)
-// --> El elemento se almacena en una lista lateral izquiera
-// --> La lista permanece siempre en la izquierda
-// Al hacer click para hacer fav el color de fondo y la fuente cambian
-// Si se hace una nueva búsqueda los resultados de fav se acumulan a la izquierda
-// El listado de favoritos se almacena en LocalStorage
-
 function printShows() {
   let urlAPI = `http://api.tvmaze.com/search/shows?q=${inputSearch.value}`;
   fetch(urlAPI) 
@@ -47,7 +33,7 @@ function printShows() {
           newImg.src = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
         } else {
           newImg.src = data[i].show.image.medium;
-          newImg.alt = data[i].show.title;
+          newImg.alt = data[i].show.name;
         }
       newLi.addEventListener('click', favoriteSelect);
       };
@@ -60,40 +46,17 @@ function favoriteSelect(event) {
   console.log(event)
   let favList = document.querySelector('.fav__list');
   let favItem = event.path[1].cloneNode(true);
+  favItem.classList.add('select__favorite');
   favList.appendChild(favItem);
+
   favItem.addEventListener('click', unFavorite)
 };
 
 function unFavorite(event) {
   let favList = document.querySelector('.fav__list');
-  favList.removeChild(event.path[1])
+  let favItem = document.querySelector('.select__favorite');
+  favList.removeChild(favItem);
+
   console.log(event)
-}
-
-
-
-
-// let favList = document.querySelector('.fav__list');
-
-// newLi.addEventListener('click', function(e) {
-
-//   let favData = {
-//     name = data.name;
-//     image = data.image;
-//   };
-
-//   let favorites = localStorage('favorites') || '[]';
-//   favorites = json.parse(favorites);
-
-//   let favList = favorites.findIndex(function(e) {
-//     return e.name == favData.name; 
-//     });
-//     if(favList > -1) {
-//       favList.innerHTML = favData;
-//     }else {
-//       favorites.push(favData);
-//     }
-
-//   localStorage.setItem('favorites', JSON.stringify(favorites));
-// });
+};
 //# sourceMappingURL=main.js.map
