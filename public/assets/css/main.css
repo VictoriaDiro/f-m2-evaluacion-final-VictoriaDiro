@@ -1,3 +1,46 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  list-style: none;
+  background-color: #000000;
+  background-image: url("https://www.transparenttextures.com/patterns/3px-tile.png");
+  color: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.header-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.title {
+  text-align: center;
+}
+
+.fav__list {
+  text-align: center;
+}
+
+.input__search {
+  height: 30px;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.search__button {
+  height: 36px;
+  border-radius: 5px;
+  margin: 5px;
+}
+
 .list-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -8,9 +51,36 @@
   flex-direction: row;
 }
 
-.select__favorite {
-  background-color: purple;
+.fav__list {
+  list-style: none;
+}
+
+.tv__shows-container {
+  list-style: none;
+}
+
+.show__item {
+  padding: 5px;
+  margin: 3px;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  background-color: #000000;
+  background-image: url("https://www.transparenttextures.com/patterns/3px-tile.png");
   text-transform: uppercase;
+  color: white;
+  text-align: center;
+}
+
+.select__favorite {
+  padding: 5px;
+  margin: 3px;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  background-color: #787878;
+  background-image: url("https://www.transparenttextures.com/patterns/3px-tile.png");
+  text-transform: uppercase;
+  color: white;
+  text-align: center;
 }
 
 /*# sourceMappingURL=main.css.map */
