@@ -35,6 +35,13 @@ function printShows() {
           newImg.src = data[i].show.image.medium;
           newImg.alt = data[i].show.name;
         }
+
+        const schedule = document.createElement('h3');
+        const scheduleContent = document.createTextNode(data[i].show.schedule.days);
+        schedule.appendChild(scheduleContent);
+        newLi.appendChild(schedule);
+
+        
       newLi.addEventListener('click', favoriteSelect);
       };
     });
@@ -42,14 +49,19 @@ function printShows() {
 
 searchButton.addEventListener('click', printShows);
 
+function printConsole(event) {
+  console.log(event.currentTarget.querySelector('.show__title').innerHTML);
+}
+
 function favoriteSelect(event) {
   console.log(event)
   let favList = document.querySelector('.fav__list');
   let favItem = event.path[1].cloneNode(true);
   favItem.classList.add('select__favorite');
   favList.appendChild(favItem);
+  console.log(favItem);
 
-  favItem.addEventListener('click', unFavorite)
+  favItem.addEventListener('click', printConsole)
 };
 
 function unFavorite(event) {
@@ -59,3 +71,4 @@ function unFavorite(event) {
 
   console.log(event)
 };
+
